@@ -1,0 +1,146 @@
+.job-card {
+  position: relative;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  display: flex;
+  flex-direction: column;
+  cursor: context-menu;
+}
+
+.job-card-header {
+  padding: 16px 16px 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.company-name {
+  margin: 0;
+  flex-direction: column;
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.status-badge {
+  flex-direction: column;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.status-saved {
+  background-color: #8f9192;
+  color: #616163;
+}
+.status-applied {
+  background-color: #2778b3;
+  color: #0543a0;
+}
+.status-assessment {
+  background-color: #a35eb4;
+  color: #7c0880;
+}
+.status-interview {
+  background-color: #edf76b;
+  color: #abad04;
+}
+.status-offer {
+  background-color: #72f761;
+  color: #239407;
+}
+.status-rejected {
+  background-color: #f15a6e;
+  color: #ec1f30;
+}
+.status-withdraw {
+  background-color: #5e6061;
+  color: #2e2f30;
+}
+
+.job-card-body {
+  padding: 0 16px 16px 16px;
+  flex-grow: 1;
+}
+
+.job-title {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.meta-label {
+  color: #888;
+  width: 75px;
+  flex-shrink: 0;
+}
+
+.meta-value {
+  color: #333;
+}
+
+.job-card-context-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 160px;
+  padding: 6px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.context-menu-item {
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.context-menu-item:hover {
+  background-color: #f3f4f6;
+}
+
+.context-menu-item-view {
+  color: #faf8f8;
+  background-color: #3210f1;
+}
+
+.context-menu-item-view:hover {
+  background-color: #200b97;
+}
+
+.context-menu-item-delete {
+  color: #dc3545;
+}
+
+.context-menu-item-delete:hover {
+  background-color: #fff5f5;
+}

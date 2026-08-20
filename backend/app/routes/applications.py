@@ -5,9 +5,13 @@ from flask_jwt_extended import (
 )
 
 from app.extensions import db
-from app.models import ApplicationTrack, JobApplication
+from app.models import ApplicationTrack, JobApplication, Resume, ApplicationResume
 from app.utils.validators import validate_application
-from datetime import datetime, timezone
+from app.services import resume_analysis
+from app.services import resume_parser
+from app.config import Config
+from datetime import datetime, date, timezone
+import os
 
 applications_bp = Blueprint(
     "applications",
@@ -75,6 +79,20 @@ def create_application():
     if valid_error:
         return jsonify(valid_error), 400
 
+    date_applied_value = data.get("date_applied")
+
+    if date_applied_value:
+        try:
+            date_applied_value = date.fromisoformat(
+                date_applied_value
+            )
+        except (TypeError, ValueError):
+            return jsonify({
+                "error": "date_applied must use YYYY-MM-DD format"
+            }), 400
+    else:
+        date_applied_value = date.today()
+
     new_app = JobApplication(
         user_id=user_id,
         job_title=data['job_title'].strip(),
@@ -85,6 +103,7 @@ def create_application():
         currency=data.get("currency", "USD"),
         job_location=data.get('job_location'),
         work_location=data['work_location'],
+        date_applied=date_applied_value,
         status=data.get('status', 'Applied'),
         notes=data.get('notes'),
         job_description=data.get('job_description')
@@ -94,6 +113,7 @@ def create_application():
 
     try:
         db.session.add(new_app)
+        db.session.add(history)
         db.session.commit()
     except Exception:
         db.session.rollback()
@@ -146,7 +166,6 @@ def update_application(application_id):
         "status",
         "work_location",
         "job_location",
-        "date_applied",
         "notes",
         "job_description",
     ]
@@ -159,7 +178,22 @@ def update_application(application_id):
 
     for field in editable:
         if field in data:
-            setattr(applicant, field, data[field])
+            value = data[field]
+
+            if field in {"job_title", "company_name"}:
+                value = value.strip()
+
+            setattr(applicant, field, value)
+
+    if "date_applied" in data:
+        try:
+            applicant.date_applied = date.fromisoformat(
+                data["date_applied"]
+            )
+        except (TypeError, ValueError):
+            return jsonify({
+                "error": "date_applied must use YYYY-MM-DD format"
+            }), 400
 
     applicant.last_activity = datetime.now(timezone.utc)
 
@@ -171,6 +205,7 @@ def update_application(application_id):
                 notes=data.get("status_note"),
             )
             db.session.add(history)
+        db.session.commit()
     except Exception:
         db.session.rollback()
         return jsonify({"error": "Unable to update application"}), 500
@@ -220,3 +255,145 @@ def get_application_history(application_id):
     )
 
     return jsonify([record.to_dict() for record in history]), 200
+
+@applications_bp.post("/<int:application_id>/resumes/<int:resume_id>")
+@jwt_required()
+def attach_resume(application_id, resume_id):
+    user_id = int(get_jwt_identity())
+
+    applicant = JobApplication.query.filter_by(
+        application_id=application_id,
+        user_id=user_id,
+    ).first()
+
+    if applicant is None:
+        return jsonify({
+            "error": "Application not found"
+        }), 404
+
+    resume = Resume.query.filter_by(
+        resume_id=resume_id,
+        user_id=user_id,
+    ).first()
+
+    if resume is None:
+        return jsonify({
+            "error": "Resume not found"
+        }), 404
+
+    existing_attachment = ApplicationResume.query.filter_by(
+        application_id=application_id,
+        resume_id=resume_id,
+    ).first()
+
+    if existing_attachment:
+        return jsonify({
+            "error": "Resume is already attached to this application"
+        }), 409
+
+    attachment = ApplicationResume(
+        application_id=application_id,
+        resume_id=resume_id,
+    )
+
+    try:
+        db.session.add(attachment)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+
+        return jsonify({
+            "error": "Unable to attach resume"
+        }), 500
+
+    return jsonify({
+        "message": "Resume attached successfully",
+        "application_id": application_id,
+        "resume_id": resume_id,
+    }), 201
+
+@applications_bp.post("/<int:application_id>/analyze-resume/<int:resume_id>")
+@jwt_required()
+def resume_analyzer(application_id, resume_id):
+    user_id = int(get_jwt_identity())
+
+    application = JobApplication.query.filter_by(
+        application_id=application_id,
+        user_id=user_id,
+    ).first()
+
+    if application is None:
+        return jsonify({
+            "error": "Job application not found"
+        }), 404
+
+    resume = Resume.query.filter_by(
+        resume_id=resume_id,
+        user_id=user_id,
+    ).first()
+
+    if resume is None:
+        return jsonify({
+            "error": "Resume not found"
+        }), 404
+
+    attachment = ApplicationResume.query.filter_by(
+        application_id=application_id,
+        resume_id=resume_id,
+    ).first()
+
+    if attachment is None:
+        return jsonify({
+            "error": "Resume is not attached to this application"
+        }), 404
+
+    if not resume.storage_key:
+        return jsonify({
+            "error": "Resume file is unavailable"
+        }), 404
+
+    file_path = os.path.join(
+        Config.UPLOAD_FOLDER,
+        resume.storage_key,
+    )
+
+    if not os.path.exists(file_path):
+        return jsonify({
+            "error": "Resume file not found on server"
+        }), 404
+
+    extension = os.path.splitext(
+        resume.storage_key
+    )[1].lower()
+
+    try:
+        resume_text = resume_parser.extract_resume_text(
+            file_path,
+            extension,
+        )
+    except Exception:
+        return jsonify({
+            "error": "Failed to parse resume file"
+        }), 500
+
+    job_description = application.job_description or ""
+
+    if not job_description.strip():
+        return jsonify({
+            "error": (
+                "This application needs a job description "
+                "before resume analysis can run"
+            )
+        }), 400
+
+    analysis_results = resume_analysis.analyze_resume(
+        resume_text,
+        job_description,
+    )
+
+    return jsonify({
+        "success": True,
+        "application_id": application_id,
+        "resume_id": resume_id,
+        "analysis": analysis_results,
+    }), 200

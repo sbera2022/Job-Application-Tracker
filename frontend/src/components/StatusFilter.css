@@ -1,0 +1,51 @@
+.status-page {
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.filter-border {
+  margin-bottom: 20px;
+}
+
+.filter-text {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.status-display {
+  display: grid;
+  gap: 10px;
+}
+
+.status-id {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.status-option {
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.status-role {
+  margin: 0 0 5px 0;
+}
+
+.status-company {
+  margin: 0 0 10px 0;
+  color: #555;
+}
+
+.status-stretch {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.status-error {
+  color: #888;
+}

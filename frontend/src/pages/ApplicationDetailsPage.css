@@ -1,0 +1,457 @@
+.application-details-page {
+  max-width: 2100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  background: #f8fafc;
+  min-height: 100vh;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  box-sizing: border-box;
+}
+
+.application-details-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.application-main-card,
+.resume-analysis-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+.resume-analysis-section {
+  margin-left: 0;
+  max-width: none;
+  position: sticky;
+  top: 24px;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.form {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  color: #1f2937;
+}
+
+.data-fetch {
+  max-width: 760px;
+  margin: 80px auto;
+  padding: 32px;
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  color: #d1d5db;
+  background: #eeeef0;
+  border: 1px solid rgb(229, 231, 235);
+  border-radius: 4px;
+}
+
+.btn-primary {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration-line: underline;
+}
+
+.form-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.form-id {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.btn-secondary {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border: #2563eb;
+  border-width: 1px;
+  border-style: solid;
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.btn-secondary-edit {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.btn-secondary-edit:hover {
+  background-color: #d1d5db;
+}
+
+.btn-secondary-set-edit {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-secondary-set-edit:hover {
+  background-color: #1d4ed8;
+}
+
+.application-details h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 0.15rem;
+  color: #0c0c0c;
+}
+
+.application-details h2 {
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: #0f0f0f;
+  margin: 0 0 1.75rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-row strong {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111111;
+  white-space: nowrap;
+}
+
+.detail-row span,
+.detail-row a {
+  font-size: 0.88rem;
+  color: #111111;
+  text-align: right;
+}
+
+.detail-row a {
+  color: #13f739;
+  text-decoration: underline;
+  text-decoration-color: rgba(63, 93, 69, 0.4);
+}
+
+.detail-row a:hover {
+  text-decoration-color: #13f739;
+}
+
+.detail-section {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid rgb(147, 153, 165);
+}
+
+.detail-section h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #080808;
+  margin: 0 0 0.6rem;
+}
+
+.detail-section p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #161616;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.application-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.application-edit-form label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0f0f0f;
+  margin-bottom: -0.6rem;
+}
+
+.application-edit-form input,
+.application-edit-form select,
+.application-edit-form textarea {
+  font-size: 0.9rem;
+  color: #0a0a0a;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #2563eb;
+  border-radius: 0;
+  padding: 0.5rem 0.1rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.application-edit-form input:focus,
+.application-edit-form select:focus,
+.application-edit-form textarea:focus {
+  border-bottom: 1.5px solid rgb(255, 0, 0);
+}
+
+.application-edit-form textarea {
+  min-height: 6rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.application-edit-form select {
+  cursor: pointer;
+}
+
+.application-edit-form .btn-primary {
+  align-self: flex-start;
+  margin-top: 0.75rem;
+}
+
+.resume-analysis-section h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.resume-analysis-section label {
+  display: block;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.resume-analysis-section select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  color: #0f172a;
+  background-color: #d4d6d8;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.resume-analysis-section select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.resume-analysis-section button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #2563eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.resume-analysis-section button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.resume-analysis-section button:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.resume-analysis-section p {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.resume-analysis {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 600px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+.resume-analysis p {
+  font-size: 1.125rem;
+  color: #334155;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resume-analysis strong {
+  font-size: 1.5rem;
+  color: #2563eb;
+  background-color: #eff6ff;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.resume-analysis h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.resume-analysis ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resume-analysis li {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.resume-analysis h3:nth-of-type(1) + ul li {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.resume-analysis h3:nth-of-type(2) + ul li {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+.resume-analysis p:not(:first-of-type) {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.tracker-result-box {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.tracker-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.tracker-progress-track {
+  width: 100%;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.tracker-progress-fill {
+  height: 100%;
+  transition:
+    width 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+.tracker-progress-fill.high {
+  background-color: #22c55e;
+}
+
+.tracker-progress-fill.medium {
+  background-color: #f59e0b;
+}
+
+.tracker-progress-fill.low {
+  background-color: #ef4444;
+}
+
+@media (max-width: 900px) {
+  .application-details-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-analysis-section {
+    position: static;
+  }
+}
+
+.success-display {
+  color: green;
+  margin-top: 10px;
+  font-weight: bold;
+}

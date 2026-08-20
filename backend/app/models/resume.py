@@ -11,6 +11,7 @@ class Resume(db.Model):
     resume_name = db.Column(db.String(255), nullable=False)
     version_type = db.Column(db.String(50))
     original_file = db.Column(db.String(255), nullable=False)
+    extracted_text = db.Column(db.Text, nullable=True)
     storage_key = db.Column(db.Text, nullable=False)
     m_type = db.Column(db.String(100), nullable=False)
     file_size_bytes = db.Column(db.BigInteger)
